@@ -28,7 +28,7 @@ import javax.swing.filechooser.FileSystemView;
  * I 1 O 0 S 5 T 7 Componentes gráficos: • Etiquetas. • Fichero origen y
  * destino. • Botón para ejecutar la acción.
  * 
- * @author Cristina Prieto Jalao
+ * @author Jose Notario Millan
  *
  */
 public class Encriptador extends JFrame {
