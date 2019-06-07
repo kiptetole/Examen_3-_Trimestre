@@ -59,10 +59,10 @@ public class Encriptador extends JFrame {
    * Crea la ventana
    */
   public Encriptador() {
-    setResizable(false);
+    setResizable(true);
     setTitle("Guardar contenido");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setBounds(100, 100, 370, 264);
+    setBounds(100, 100, 400, 370);
 
     contentPane = new JPanel();
     contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,11 +80,11 @@ public class Encriptador extends JFrame {
     contentPane.getRootPane().add(scrollPane);
 
     JLabel label_fichero1 = new JLabel("Fichero 1:");
-    label_fichero1.setBounds(39, 25, 60, 14);
+    label_fichero1.setBounds(39, 25, 100, 14);
     contentPane.add(label_fichero1);
 
     JLabel label_fichero2 = new JLabel("Fichero 2:");
-    label_fichero2.setBounds(39, 94, 60, 14);
+    label_fichero2.setBounds(39, 94, 100, 14);
     contentPane.add(label_fichero2);
 
     JFileChooser jfc1 = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -99,7 +99,7 @@ public class Encriptador extends JFrame {
             boton_fichero1.setText("Seleccionado");
       }
     });
-    boton_fichero1.setBounds(151, 25, 178, 23);
+    boton_fichero1.setBounds(151, 25, 200, 23);
     contentPane.add(boton_fichero1);
 
     JFileChooser jfc2 = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -114,40 +114,46 @@ public class Encriptador extends JFrame {
             boton_fichero2.setText("Seleccionado");
       }
     });
-    boton_fichero2.setBounds(151, 90, 178, 23);
+    boton_fichero2.setBounds(151, 90, 200, 23);
     contentPane.add(boton_fichero2);
 
-    JButton boton_guardar = new JButton("Guardar");
-    boton_guardar.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    JButton Encriptar = new JButton("Encriptar");
+    Encriptar.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        modificarLetrasPorNumeros(textArea_resultado, jfc1, jfc2);
+      }
+
+      private void modificarLetrasPorNumeros(JTextArea textArea_resultado, JFileChooser jfc1, JFileChooser jfc2) {
         try {
-          BufferedReader br1 = new BufferedReader(new FileReader(jfc1.getSelectedFile().getPath()));
-          BufferedWriter bw = new BufferedWriter(new FileWriter(jfc2.getSelectedFile().getPath()));
+          BufferedReader leer = new BufferedReader(new FileReader(jfc1.getSelectedFile().getPath()));
+          BufferedWriter escribir = new BufferedWriter(new FileWriter(jfc2.getSelectedFile().getPath()));
 
           String linea = "";
+          String resultado = "";
           while (linea != null) {
-            linea = br1.readLine();
+            linea = leer.readLine();
             if (linea != null) {
               linea = linea.replace('A', '4').replace('a', '4').replace('B', '8').replace('b', '8').replace('E', '3')
                   .replace('e', '3').replace('I', '1').replace('i', '1').replace('O', '0').replace('o', '0')
                   .replace('S', '5').replace('s', '5').replace('T', '7').replace('t', '7');
-
-              bw.write(linea + "\n");
+              escribir.write(linea + "\n");
+              resultado += linea + "\n";
             }
           }
+          
+          textArea_resultado.append(resultado);
+          JOptionPane.showMessageDialog(frame, "fichero encriptado con exito");
 
-          br1.close();
-          bw.close();
+          leer.close();
+          escribir.close();
 
-          JOptionPane.showMessageDialog(frame, "Fichero guardado con éxito");
-
-        } catch (IOException | NullPointerException ioe) {
+        } catch (IOException | NullPointerException e) {
           JOptionPane.showMessageDialog(frame, "Indica los dos ficheros correctamente.", "Error",
               JOptionPane.ERROR_MESSAGE);
         }
       }
     });
-    boton_guardar.setBounds(125, 144, 91, 23);
-    contentPane.add(boton_guardar);
+    Encriptar.setBounds(125, 144, 91, 23);
+    contentPane.add(Encriptar);
   }
 }

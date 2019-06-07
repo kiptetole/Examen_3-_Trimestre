@@ -63,7 +63,10 @@ public class Tiempo {
 
       public void actionPerformed(ActionEvent arg0) {
 
-        JOptionPane.showMessageDialog(frmEjercicioFecha, nueva.validarFecha(textoIntroducido.getText()));
+        if (nueva.validarFecha(textoIntroducido.getText())) 
+          JOptionPane.showMessageDialog(frmEjercicioFecha, "La fecha es valida.");
+        else
+          JOptionPane.showMessageDialog(frmEjercicioFecha, "La fecha no es valida.");
 
       }
     });
@@ -73,9 +76,12 @@ public class Tiempo {
     JButton diaPosterior = new JButton("Dia Posterior");
     diaPosterior.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-
-        JOptionPane.showMessageDialog(frmEjercicioFecha, nueva.diaPosterior(textoIntroducido.getText()));
-
+        
+        if (nueva.validarFecha(textoIntroducido.getText())) 
+          textoIntroducido.setText(nueva.diaPosterior(textoIntroducido.getText()));
+        else
+          JOptionPane.showMessageDialog(frmEjercicioFecha, "La fecha no es valida.");
+        
       }
     });
     diaPosterior.setBounds(148, 90, 155, 23);
@@ -87,7 +93,10 @@ public class Tiempo {
       @Override
       public void actionPerformed(ActionEvent e) {
 
-        JOptionPane.showMessageDialog(frmEjercicioFecha, nueva.diaAnterior(textoIntroducido.getText()));
+        if (nueva.validarFecha(textoIntroducido.getText())) 
+          textoIntroducido.setText(nueva.diaAnterior(textoIntroducido.getText()));
+        else
+          JOptionPane.showMessageDialog(frmEjercicioFecha, "La fecha no es valida.");
 
       }
     });
